@@ -1,0 +1,11 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    ports: 
+      - '27017:27017'
+  mail-server: 
+    image: djfarrelly/maildev
+    ports: 
+      - '1080:80'
+      - '1025:25'
