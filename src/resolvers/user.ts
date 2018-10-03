@@ -23,5 +23,18 @@ export default class UserResolver {
 	) {
 
 		return this.service.create( name, email, password )
-    }
+	}
+
+	@Mutation(_ => User)
+	async updateUser(
+		@Arg('id') id: string,
+		@Arg('name') name: string,
+		@Arg('email') email:string,
+		@Arg('password') password: string
+	){
+
+		return this.service.update( id, name, email, password )
+
+	}
+
 }
