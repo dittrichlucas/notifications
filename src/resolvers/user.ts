@@ -9,11 +9,22 @@ class User {
 	@Field() email: string
 }
 
+@ObjectType()
+class Session {
+	@Field() token: string
+}
+
+
 @Resolver()
 export default class UserResolver {
 
 	@Inject()
 	private readonly service: UserService
+
+	@Query()
+	status(): string {
+		return 'Está rodando'
+	}
 
     @Mutation(_ => User)
     async createUser(
@@ -21,8 +32,15 @@ export default class UserResolver {
 		@Arg('email') email: string,
 		@Arg('password') password: string
 	) {
-
 		return this.service.create( name, email, password )
+	}
+
+	@Mutation(_=> Session)
+	async createSession(
+		@Arg('email') email: string,
+		@Arg('password') password: string
+	){
+		return this.service.createSession( email, password )
 	}
 
 	@Mutation(_ => User)
@@ -34,7 +52,6 @@ export default class UserResolver {
 	){
 
 		return this.service.update( id, name, email, password )
-
 	}
 
 }

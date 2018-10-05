@@ -1,17 +1,23 @@
 import { ApolloServer } from 'apollo-server'
 import 'reflect-metadata'
-import { buildSchema } from 'type-graphql'
+import dbConnection from './database'
+import { buildSchema, useContainer } from 'type-graphql'
 import UserResolver from './resolvers/user'
+import { Container } from 'typedi';
+
+useContainer(Container)
 
 async function server() {
     const schema = await buildSchema({ resolvers: [ UserResolver] })
     const server = new ApolloServer({ schema })
 
-    return server.listen(3000)
+    return server.listen(3001)
 }
-
-server().then(() => {
+dbConnection.then(() => {
+    return server()
+}).then(() => {
     console.log('Servidor GraphQL rodando...')
-}).catch(() => {
-    console.log('Não foi possível conectar-se ao servidor...')
+}).catch(err => {
+    console.log(err)
+    console.log('Não foi possível subir o servidor...')
 })

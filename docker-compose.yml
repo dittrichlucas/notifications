@@ -7,5 +7,5 @@ services:
   mail-server: 
     image: djfarrelly/maildev
     ports: 
-      - '1080:80'
-      - '1025:25'
+      - '1081:80'
+      - '1026:25'
