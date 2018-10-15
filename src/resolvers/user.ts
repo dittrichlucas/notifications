@@ -1,4 +1,4 @@
-import { Query, Resolver, Arg, Mutation, ObjectType, Field } from 'type-graphql'
+import { Query, Resolver, Arg, Mutation, ObjectType, Field, Ctx, Authorized } from 'type-graphql'
 import { Inject } from 'typedi'
 import UserService from '../services/user';
 
@@ -43,15 +43,24 @@ export default class UserResolver {
 		return this.service.createSession( email, password )
 	}
 
+	@Authorized()
 	@Mutation(_ => User)
 	async updateUser(
-		@Arg('id') id: string,
+		@Ctx() context: any,
 		@Arg('name') name: string,
-		@Arg('email') email:string,
 		@Arg('password') password: string
 	){
+		return this.service.update( context.user.id, name, password )
+	}
 
-		return this.service.update( id, name, email, password )
+	@Authorized()
+	@Mutation(_ => Boolean)
+	async removeUser(
+		@Ctx() context: any,
+	){
+		await this.service.remove( context.user.id,)
+
+		return true
 	}
 
 }

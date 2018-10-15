@@ -2,10 +2,14 @@ version: '3'
 services:
   mongo:
     image: mongo
-    ports: 
+    ports:
       - '27017:27017'
-  mail-server: 
+  mail-server:
     image: djfarrelly/maildev
-    ports: 
+    ports:
       - '1081:80'
       - '1026:25'
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'

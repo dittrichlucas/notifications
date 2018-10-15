@@ -1,4 +1,5 @@
 import { ApolloServer } from 'apollo-server'
+import User from './models/user'
 import 'reflect-metadata'
 import dbConnection from './database'
 import { buildSchema, useContainer } from 'type-graphql'
@@ -7,9 +8,21 @@ import { Container } from 'typedi';
 
 useContainer(Container)
 
+async function context(ctx: any) {
+    const token = ctx.req.headers.authorization || ''
+
+    const user = await User.findOne({ 'sessions.token': { $eq: token } })
+
+    return { ...ctx, user }
+}
+
+function authChecker(resolverData: any) {
+    return resolverData.context.user !== null
+}
+
 async function server() {
-    const schema = await buildSchema({ resolvers: [ UserResolver] })
-    const server = new ApolloServer({ schema })
+    const schema = await buildSchema({ resolvers: [ UserResolver], authChecker })
+    const server = new ApolloServer({ schema, context })
 
     return server.listen(3001)
 }
