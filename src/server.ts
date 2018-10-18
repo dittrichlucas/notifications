@@ -5,6 +5,7 @@ import dbConnection from './database'
 import { buildSchema, useContainer } from 'type-graphql'
 import UserResolver from './resolvers/user'
 import { Container } from 'typedi';
+import NotificationResolver from './resolvers/notification';
 
 useContainer(Container)
 
@@ -21,7 +22,7 @@ function authChecker(resolverData: any) {
 }
 
 async function server() {
-    const schema = await buildSchema({ resolvers: [ UserResolver], authChecker })
+    const schema = await buildSchema({ resolvers: [UserResolver, NotificationResolver], authChecker })
     const server = new ApolloServer({ schema, context })
 
     return server.listen(3001)

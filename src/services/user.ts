@@ -9,7 +9,7 @@ export default class UserService{
 
     async create( name: string, email: string, password: string ){
         const user = new User({ name, email, password, sessions: [] })
-        user.password = await bcrypt.hash(password, 10)
+        user.password = await bcrypt.hash( password, 10 )
 
         const createdUser = await user.save()
         console.log(createdUser)
@@ -17,11 +17,11 @@ export default class UserService{
         return createdUser
     }
 
-    async createSession(email: string, password: string) {
+    async createSession( email: string, password: string ) {
         const user = await User.findOne({ email })
 
         if (!user || !await bcrypt.compare( password, user.password )){
-            throw new Error('User not authenticated!')
+            throw new Error( 'User not authenticated!' )
         }
 
         const token = crypto.randomBytes(32).toString('hex')
@@ -34,16 +34,18 @@ export default class UserService{
     }
 
     async update( _id: string, name: string, password: string ){
-
-        return await User.findOneAndUpdate(
+        return User.findOneAndUpdate(
             { _id },
             { $set: { name, password: await bcrypt.hash(password, 10)}}
         )
     }
 
     async remove( _id: string ){
+        return User.findByIdAndRemove({ _id })
+    }
 
-        return await User.findByIdAndRemove({ _id })
+    async find( _id: string ) {
+        return User.findOne({ _id })
     }
 
 }
