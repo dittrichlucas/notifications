@@ -1,7 +1,6 @@
 import User from '../models/user'
 import { Service } from 'typedi'
-import { Query } from 'mongoose'
-import bcrypt, { hash } from 'bcrypt'
+import bcrypt from 'bcrypt'
 import crypto from 'crypto'
 
 @Service()

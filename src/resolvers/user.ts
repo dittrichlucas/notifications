@@ -1,6 +1,6 @@
 import { Query, Resolver, Arg, Mutation, ObjectType, Field, Ctx, Authorized } from 'type-graphql'
 import { Inject } from 'typedi'
-import UserService from '../services/user';
+import UserService from '../services/user'
 
 @ObjectType()
 class User {
@@ -39,7 +39,7 @@ export default class UserResolver {
 	async createSession(
 		@Arg('email') email: string,
 		@Arg('password') password: string
-	){
+	) {
 		return this.service.createSession( email, password )
 	}
 
@@ -49,7 +49,7 @@ export default class UserResolver {
 		@Ctx() context: any,
 		@Arg('name') name: string,
 		@Arg('password') password: string
-	){
+	) {
 		return this.service.update( context.user.id, name, password )
 	}
 
@@ -57,7 +57,7 @@ export default class UserResolver {
 	@Mutation(_ => Boolean)
 	async removeUser(
 		@Ctx() context: any,
-	){
+	) {
 		await this.service.remove( context.user.id,)
 
 		return true

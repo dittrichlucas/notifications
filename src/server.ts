@@ -4,8 +4,8 @@ import 'reflect-metadata'
 import dbConnection from './database'
 import { buildSchema, useContainer } from 'type-graphql'
 import UserResolver from './resolvers/user'
-import { Container } from 'typedi';
-import NotificationResolver from './resolvers/notification';
+import { Container } from 'typedi'
+import NotificationResolver from './resolvers/notification'
 
 useContainer(Container)
 

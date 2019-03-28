@@ -1,4 +1,4 @@
-import { prop, Typegoose } from 'typegoose';
+import { prop, Typegoose } from 'typegoose'
 
 type Session = {
 	token: string
@@ -13,4 +13,4 @@ class User extends Typegoose {
 	@prop() sessions: Session[]
 }
 
-export default new User().getModelForClass(User);
+export default new User().getModelForClass(User)

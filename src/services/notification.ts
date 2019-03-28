@@ -1,7 +1,7 @@
 import { Service, Inject } from 'typedi'
 import Notification from '../models/notification'
-import { Mailer } from './mailer';
-import UserService from './user';
+import { Mailer } from './mailer'
+import UserService from './user'
 
 @Service()
 export default class NotificationService{
