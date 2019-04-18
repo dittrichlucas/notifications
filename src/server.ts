@@ -27,6 +27,7 @@ async function server() {
 
     return server.listen(3001)
 }
+
 dbConnection.then(() => {
     return server()
 }).then(() => {
